@@ -1,0 +1,21 @@
+,repo_language,count,top_repo,activity,actor_count
+1,JavaScript,15338,gatsbyjs/gatsby,11627.97,546772
+2,Python,13607,home-assistant/home-assistant,22585.94,492357
+3,TypeScript,10521,microsoft/vscode,27168.26,384391
+4,Java,6884,elastic/elasticsearch,7049.47,249506
+5,Go,4652,kubernetes/kubernetes,19722.03,227071
+6,C++,4247,tensorflow/tensorflow,21523.68,246476
+7,PHP,3619,magento/magento2,8309.46,140356
+8,Ruby,3602,Homebrew/homebrew-core,6949.59,73377
+9,C#,3068,dotnet/runtime,13958.7,151227
+10,Shell,2786,conda-forge/staged-recipes,5331.44,107574
+11,HTML,2691,kubernetes/website,8994.16,72994
+12,C,2452,zephyrproject-rtos/zephyr,7585.32,130582
+13,Rust,1807,rust-lang/rust,11957.14,62058
+14,Vue,1227,tokyo-metropolitan-gov/covid19,2572.68,26966
+15,Kotlin,1064,mozilla-mobile/fenix,6019.19,39356
+16,Swift,846,corona-warn-app/cwa-app-ios,2109.71,31145
+17,Jupyter Notebook,777,jupyterlab/jupyterlab,2054.4,22714
+18,R,677,satijalab/seurat,1808.72,19150
+19,Scala,668,apache/spark,5258.59,16343
+20,CSS,667,tailwindcss/tailwindcss,1864.78,16138

@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Base d
 SRC_DIR = 0
 SQLS_DIR = 1
 CASE_STUDY_SQLS_DIR = 2
+TEMPLATES_DIR = 80
 
 RESULT_DIR = 100
 
@@ -26,6 +27,7 @@ absPathDict = {
     SQLS_DIR: os.path.join(BASE_DIR, 'data/src/sqls/'),
     CASE_STUDY_SQLS_DIR: os.path.join(BASE_DIR, 'data/src/case-study/sqls/'),
     RESULT_DIR: os.path.join(BASE_DIR, 'data/result/'),
+    TEMPLATES_DIR: os.path.join(BASE_DIR, 'data/src/templates/'),
 }
 
 fileNameDict = {k: v.replace('\\', '/').split('/')[-1] for k, v in absPathDict.items()}

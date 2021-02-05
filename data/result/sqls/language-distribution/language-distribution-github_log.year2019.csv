@@ -1,0 +1,21 @@
+,repo_language,count,top_repo,activity,actor_count
+1,JavaScript,17395,gatsbyjs/gatsby,13257.46,548259
+2,Python,12973,home-assistant/home-assistant,16388.73,402571
+3,Java,7229,elastic/elasticsearch,6884.23,237692
+4,TypeScript,7162,microsoft/vscode,26146.75,265775
+5,Go,4272,kubernetes/kubernetes,21472.82,184333
+6,C++,4209,tensorflow/tensorflow,19610.84,204440
+7,Ruby,4101,Homebrew/homebrew-core,6340.47,75165
+8,PHP,3983,magento/magento2,9690.01,137403
+9,C#,2994,aspnet/AspNetCore,10986.93,137457
+10,HTML,2926,kubernetes/website,8019.99,62403
+11,Shell,2808,conda-forge/staged-recipes,4832.84,88418
+12,C,2545,zephyrproject-rtos/zephyr,6204.25,112777
+13,Rust,1535,996icu/996.ICU,18781.29,54268
+14,CSS,1219,jgthms/bulma,1007.84,23423
+15,Vue,1026,ElemeFE/element,4609.6,24009
+16,Swift,940,wordpress-mobile/WordPress-iOS,1203.55,27591
+17,Kotlin,796,mozilla-mobile/android-components,1424.64,22940
+18,Scala,734,prisma/prisma,1793.93,16790
+19,R,673,satijalab/seurat,1679.97,16179
+20,Jupyter Notebook,615,huaweicloud/ModelArts-Lab,1942.02,15986
