@@ -1,0 +1,3 @@
+,repo_id,repo_name,resolve_issue_period_avg,respond_issue_period_avg,resolve_issue_period_median,respond_issue_period_median,resolve_pr_period_avg,respond_pr_period_avg,resolve_pr_period_median,respond_pr_period_median,count
+1,20580498,kubernetes/kubernetes,4049509.0,127702.0,724730.0,7.0,2117785.0,391.0,438256.0,8.0,17153508
+2,45717250,tensorflow/tensorflow,2069702.0,303019.0,1196226.5,49198.0,1485964.0,464152.0,389723.0,82591.0,11786287

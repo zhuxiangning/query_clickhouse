@@ -1,20 +1,22 @@
 import math
+import os
 import sys
 
 import pandas as pd
 import json
 import webbrowser
 
+from etc import profile
+
 
 def show_data_in_browser():
-  py_post_processor_path, res_csv_save_path, svg_path = list(sys.argv)[0:3]
+  py_post_processor_path, res_csv_save_path, svg_html_path = list(sys.argv)[0:3]
   data = pd.read_csv(res_csv_save_path, index_col=0)
   d = analysis(data)
-  iframe = """<iframe src="{0}" data="{1}" width="600" height="260"></iframe>""".format(svg_path, json.dumps(d))
-  html_path = svg_path + '.html'
-  with open(html_path, 'w') as f:
+  iframe = """<iframe src="{0}" data="{1}" width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(d))
+  with open(svg_html_path, 'w') as f:
     f.write(iframe)
-  webbrowser.open_new_tab(html_path)
+  webbrowser.open_new_tab(svg_html_path)
 
 
 # # Update your code when you change to a new task!

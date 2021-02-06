@@ -16,18 +16,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Base d
 # Notes:  A directory must end with a suffix '_DIR' and end with '/' in the content.
 #   A path ending with a suffix '_PATH' is recommended.
 SRC_DIR = 0
-SQLS_DIR = 1
-CASE_STUDY_SQLS_DIR = 2
 TEMPLATES_DIR = 80
 
 RESULT_DIR = 100
 
+BRIEF_SQLS_PATH = 200
+
 absPathDict = {
     SRC_DIR: os.path.join(BASE_DIR, 'data/src/'),
-    SQLS_DIR: os.path.join(BASE_DIR, 'data/src/sqls/'),
-    CASE_STUDY_SQLS_DIR: os.path.join(BASE_DIR, 'data/src/case-study/sqls/'),
-    RESULT_DIR: os.path.join(BASE_DIR, 'data/result/'),
     TEMPLATES_DIR: os.path.join(BASE_DIR, 'data/src/templates/'),
+    RESULT_DIR: os.path.join(BASE_DIR, 'data/result/'),
+    BRIEF_SQLS_PATH: os.path.join(BASE_DIR, 'data/brief/sqls.json'),
 }
 
 fileNameDict = {k: v.replace('\\', '/').split('/')[-1] for k, v in absPathDict.items()}

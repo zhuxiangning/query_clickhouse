@@ -8,9 +8,8 @@ module.exports = async function(config) {
         banned_actor_ids.push(config.banned_actors[i].id);
     }
     let ids={
-        "repo_ids": actor_ids.join(','),
-        "table": config.table,
-        "banned_actor_ids": org_ids.join(',')
+        "repo_ids": repo_ids.join(','),
+        "banned_actor_ids": banned_actor_ids.join(',')
     }
     return ids;
 }
