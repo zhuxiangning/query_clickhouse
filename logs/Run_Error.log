@@ -1,0 +1,36 @@
+[2021-02-06 13:55:08 - ERROR - query_sql.py:line 68]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 66, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'repo_ids'
+
+[2021-02-06 13:56:33 - ERROR - query_sql.py:line 68]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 66, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'actor_ids'
+
+[2021-02-06 14:09:03 - ERROR - query_sql.py:line 69]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 67, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'actor_ids'
+
+[2021-02-06 14:21:16 - ERROR - query_sql.py:line 69]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 67, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'repo_ids'
+
+[2021-02-06 15:08:46 - ERROR - query_sql.py:line 71]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 67, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'repo_ids'
+
+[2021-02-06 15:24:46 - ERROR - query_sql.py:line 71]: Check whether the function "pre_processor" works well.
+Traceback (most recent call last):
+  File "E:/git_repo/query_clickhouse/script/service/query_sql.py", line 67, in sql_standardized
+    sql = sql.format_map(config_obj.__dict__)
+KeyError: 'actor_ids'
+
