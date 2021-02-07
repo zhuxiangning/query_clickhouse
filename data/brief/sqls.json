@@ -33,6 +33,12 @@
           "post_process_display_mode": 0
         },
         {
+          "unit_name": "developers-timezone-predict",
+          "pre_processor": false,
+          "post_processor": true,
+          "post_process_display_mode": 1
+        },
+        {
           "unit_name": "developers-top",
           "pre_processor": false,
           "post_processor": true,

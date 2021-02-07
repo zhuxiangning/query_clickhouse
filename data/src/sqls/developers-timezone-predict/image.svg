@@ -23,44 +23,19 @@ text {
 
 var textMap = new Map([
   [
-    "mon_text", {
-      "中文": "周一",
-      "EN": "Mon"
-    }
-  ], [
-    "tue_text", {
-      "中文": "周二",
-      "EN": "Tue"
-    }
-  ], [
-    "wed_text", {
-      "中文": "周三",
-      "EN": "Wed"
-    }
-  ], [
-    "thu_text", {
-      "中文": "周四",
-      "EN": "Thu"
-    }
-  ], [
-    "fri_text", {
-      "中文": "周五",
-      "EN": "Fri"
-    }
-  ], [
-    "sat_text", {
-      "中文": "周六",
-      "EN": "Sat"
-    }
-  ], [
-    "sun_text", {
-      "中文": "周日",
-      "EN": "Sun"
+    "eachweek_text", {
+      "中文": "周粒度",
+      "EN": "week-granu"
     }
   ], [
     "title_text", {
       "中文": "工作时间分布图",
       "EN": "Working Hour Distribution"
+    }
+  ], [
+    "timezone_text", {
+      "中文": "GMT时区预测：",
+      "EN": "GMT zone pred: "
     }
   ]
 ]);
@@ -115,16 +90,16 @@ function getQueryVariable(variable) {
 }
 
 var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
-var dayId = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+var dayId = ['eachweek'];
 
-function renderElements(data) {
+function renderElements(data, GMT_time_zone) {
   var width = 24;
   var hight = 24;
   var startX = 62;
   var startY = 52;
   var svg = document.getElementsByTagName("svg")[0];
   var maxHour = 24;
-  var maxDay = 7;
+  var maxDay = 1;
   var radius = 22;
   var length = maxHour * maxDay;
   if (!data) {
@@ -181,10 +156,24 @@ function renderElements(data) {
       svg.appendChild(e);
     }
   }
+
+  var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  e.setAttribute('x', 0);
+  e.setAttribute('y', startY + (day + 1) * radius);
+  e.setAttribute('id', 'timezone_text');
+  svg.appendChild(e);
+
+  var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  e.setAttribute('x', 100);
+  e.setAttribute('y', startY + (day + 1) * radius);
+  e.innerHTML = 'E'.concat(GMT_time_zone.toString()).replace('E-','W');
+  svg.appendChild(e);
 }
 
 function onSvgLoad() {
   var data = getQueryVariable("data");
+  var GMT_time_zone = getQueryVariable("GMT_time_zone");
+  var max_conti_k_hours = getQueryVariable("max_conti_k_hours");
   if (data != false) {
     try {
       data = JSON.parse(data);
@@ -199,7 +188,7 @@ function onSvgLoad() {
   } else {
     data = undefined;
   }
-  renderElements(data);
+  renderElements(data, GMT_time_zone);
   var lang = getQueryVariable("lang");
   var langBtn = document.getElementById("en_btn_text");
   if (lang && (lang == "zh" || lang == "zh-cn")) {

@@ -13,7 +13,7 @@ def show_data_in_browser():
   py_post_processor_path, res_csv_save_path, svg_html_path = list(sys.argv)[0:3]
   data = pd.read_csv(res_csv_save_path, index_col=0)
   d = analysis(data)
-  iframe = """<iframe src="{0}" data="{1}" width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(d))
+  iframe = """<iframe src="{0}?data={1}" width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(d))
   with open(svg_html_path, 'w') as f:
     f.write(iframe)
   webbrowser.open_new_tab(svg_html_path)
