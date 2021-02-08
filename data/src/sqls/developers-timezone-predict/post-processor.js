@@ -46,5 +46,6 @@ module.exports = async function(data, config) {
   else{
     GMT_time_zone = cur_max_conti_index - 24;
   }
+  GMT_time_zone = GMT_time_zone - 8;
   return `${config.baseUrl}svgrenderer/github/${config.owner}/${config.repo}?path=sqls/developers-timezone-predict/image.svg&data=${JSON.stringify(d)}&GMT_time_zone=${JSON.stringify(GMT_time_zone)}&max_conti_k_hours=${JSON.stringify(max_conti_k_hours)}`;
 }
