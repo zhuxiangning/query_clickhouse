@@ -1,1 +1,16 @@
-SELECT COUNT(*) AS count, toDayOfWeek(created_at) AS dayOfWeek, toHour(created_at) AS hour FROM {{table}} GROUP BY hour, dayOfWeek
+SELECT actor_id, hour, count
+FROM (
+    SELECT actor_id, toHour(created_at) AS hour, COUNT(*) AS count
+    FROM {{table}}
+    WHERE actor_login NOT LIKE '%[bot]'
+    GROUP BY actor_id, hour
+) AS ahc
+INNER JOIN (
+	SELECT actor_id, COUNT(*) AS total_count
+	FROM {{table}}
+	WHERE actor_login NOT LIKE '%[bot]'
+	GROUP BY actor_id
+	ORDER BY total_count DESC
+	LIMIT 50000
+) AS n_ac ON (ahc.actor_id = n_ac.actor_id)
+ORDER BY actor_id, hour
