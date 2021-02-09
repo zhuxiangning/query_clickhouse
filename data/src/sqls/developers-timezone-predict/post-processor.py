@@ -9,28 +9,28 @@ import webbrowser
 from etc import profile
 
 CONTI_K_HOURS = 12
+GMT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
 
 
 def show_data_in_browser():
-  py_post_processor_path, res_csv_save_path, svg_html_path = list(sys.argv)[0:3]
-  data = pd.read_csv(res_csv_save_path, index_col=0)
-  actor_ids, actor_max_conti_index, max_conti_k_hours_list, actor_24hours = analysis(data)
-  GMT_time_zones = []
-  for i in range(len(actor_ids)):
-      GMT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
-      GMT_time_zone = actor_max_conti_index[i] if actor_max_conti_index[i] < 12 else (actor_max_conti_index[i] - 24)
-      GMT_time_zone = GMT[GMT_time_zone - 8]
-      GMT_time_zones.append(GMT_time_zone)
-  df = pd.DataFrame({"actor_id": actor_ids, "time_zone": GMT_time_zones, "max_conti_{}_hours".format(CONTI_K_HOURS): max_conti_k_hours_list})
-  df.to_csv(res_csv_save_path.replace(".csv", ".result.csv"), columns=["actor_id", "time_zone"])
-  example_idx = 0
-  d = actor_24hours[example_idx]
-  GMT_time_zone = GMT_time_zones[example_idx]
-  max_conti_k_hours = max_conti_k_hours_list[example_idx]
-  iframe = """<iframe id="svg" src="{0}?data={1}&GMT_time_zone={2}&max_conti_k_hours={3}"  width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(d), GMT_time_zone, max_conti_k_hours)
-  with open(svg_html_path, 'w') as f:
-    f.write(iframe)
-  webbrowser.open_new_tab(svg_html_path)
+    py_post_processor_path, res_csv_save_path, svg_html_path = list(sys.argv)[0:3]
+    data = pd.read_csv(res_csv_save_path, index_col=0)
+    actor_ids, actor_max_conti_index, max_conti_k_hours_list, actor_24hours = analysis(data)
+    GMT_time_zones = []
+    for i in range(len(actor_ids)):
+        GMT_time_zone = actor_max_conti_index[i] if actor_max_conti_index[i] < 12 else (actor_max_conti_index[i] - 24)
+        GMT_time_zone = GMT[GMT_time_zone - 8]
+        GMT_time_zones.append(GMT_time_zone)
+    df = pd.DataFrame({"actor_id": actor_ids, "time_zone": GMT_time_zones, "max_conti_{}_hours".format(CONTI_K_HOURS): max_conti_k_hours_list})
+    df.to_csv(res_csv_save_path.replace(".csv", ".result.csv"), columns=["actor_id", "time_zone"])
+    example_idx = 0
+    d = actor_24hours[example_idx]
+    GMT_time_zone = GMT_time_zones[example_idx]
+    max_conti_k_hours = max_conti_k_hours_list[example_idx]
+    iframe = """<iframe id="svg" src="{0}?data={1}&GMT_time_zone={2}&max_conti_k_hours={3}"  width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(d), GMT_time_zone, max_conti_k_hours)
+    with open(svg_html_path, 'w') as f:
+        f.write(iframe)
+    webbrowser.open_new_tab(svg_html_path)
 
 
 # # Update your code when you change to a new task!
