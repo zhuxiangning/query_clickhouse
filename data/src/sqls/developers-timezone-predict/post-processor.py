@@ -38,7 +38,7 @@ def show_data_in_browser():
 #     pass
 #{#
 def analysis(data):
-    data = pd.DataFrame(data).head(1000)
+    data = pd.DataFrame(data)
     data.columns = ["actor_id", "hour", "count"]
     min_count = min(data["count"])
     max_count = max(data["count"])
