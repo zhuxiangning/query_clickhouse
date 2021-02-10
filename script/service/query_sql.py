@@ -152,7 +152,7 @@ def auto_update_sqls_brief(json_path, update):
 
 if __name__ == '__main__':
     UPDATE_SQLS_BRIEF = True
-    WHICH_TABLE_NAME = profile.tables[profile.WHICH_TABLE + 1]
+    WHICH_TABLE_NAME = profile.tables[profile.WHICH_TABLE + 0]
     WHICH_SQLS_GROUP = 1  # index start from 0
     WHICH_FUNC_UNITS = 2  # index start from 0
 
