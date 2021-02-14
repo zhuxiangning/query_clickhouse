@@ -3,17 +3,23 @@
     <style type="text/css">
 <![CDATA[
 .bg {
-  fill: white;
+  fill: black;
 }
 text {
   text-anchor: middle;
   dominant-baseline: middle;
 }
 .hour_day_text {
+  fill: white;
   font-size: 14px;
 }
 .title_text {
+  fill: white;
   font-size: 20px;
+}
+.timezone_text {
+  fill: white;
+  font-size: 14px;
 }
 ]]>
     </style>
@@ -25,7 +31,7 @@ var textMap = new Map([
   [
     "eachweek_text", {
       "中文": "周粒度",
-      "EN": "week-granu"
+      "EN": "Week-GL"
     }
   ], [
     "title_text", {
@@ -34,8 +40,8 @@ var textMap = new Map([
     }
   ], [
     "timezone_text", {
-      "中文": "GMT时区预测：",
-      "EN": "GMT zone pred: "
+      "中文": "GMT时区",
+      "EN": "GMT Zone"
     }
   ]
 ]);
@@ -65,9 +71,9 @@ function changeLang(btn) {
 
   var btns = document.getElementsByName("lang_btn");
   for (var b of btns) {
-    b.style.fill = "lightgrey";
+    b.style.fill = "darkgrey";
   }
-  btn.style.fill = "black";
+  btn.style.fill = "white";
 }
 
 function onLangBtnClick(evt) {
@@ -89,7 +95,8 @@ function getQueryVariable(variable) {
   return false;
 }
 
-var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+// var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+var hourColor = ['#B9FB69', '#CEFB6A', '#E6FC6C', '#FEFD6D', '#F9E067', '#F5C361', '#F1A85C', '#EE8C58', '#EC7255', '#EB5953'];
 var dayId = ['eachweek'];
 
 function renderElements(data, GMT_time_zone) {
@@ -136,7 +143,7 @@ function renderElements(data, GMT_time_zone) {
   for (var day = 0; day < maxDay; day++) {
     var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
     e.innerHTML = dayId[day];
-    e.setAttribute('x', startX - 41);
+    e.setAttribute('x', startX - 28);
     e.setAttribute('y', startY + day * radius + radius / 2);
     e.setAttribute('class', 'hour_day_text');
     e.setAttribute('id', dayId[day] + '_text');
@@ -158,15 +165,17 @@ function renderElements(data, GMT_time_zone) {
   }
 
   var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  e.setAttribute('x', 0);
+  e.setAttribute('x', startX - 28);
   e.setAttribute('y', startY + (day + 1) * radius);
+  e.setAttribute('class', 'timezone_text');
   e.setAttribute('id', 'timezone_text');
   svg.appendChild(e);
 
   var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  e.setAttribute('x', 100);
-  e.setAttribute('y', startY + (day + 1) * radius);
   e.innerHTML = 'E'.concat(GMT_time_zone.toString()).replace('E-','W');
+  e.setAttribute('x', 80);
+  e.setAttribute('y', startY + (day + 1) * radius);
+  e.setAttribute('class', 'timezone_text');
   svg.appendChild(e);
 }
 

@@ -3,16 +3,18 @@
     <style type="text/css">
 <![CDATA[
 .bg {
-  fill: white;
+  fill: black;
 }
 text {
   text-anchor: middle;
   dominant-baseline: middle;
 }
 .hour_day_text {
+  fill: white;
   font-size: 14px;
 }
 .title_text {
+  fill: white;
   font-size: 20px;
 }
 ]]>
@@ -90,9 +92,9 @@ function changeLang(btn) {
 
   var btns = document.getElementsByName("lang_btn");
   for (var b of btns) {
-    b.style.fill = "lightgrey";
+    b.style.fill = "darkgrey";
   }
-  btn.style.fill = "black";
+  btn.style.fill = "white";
 }
 
 function onLangBtnClick(evt) {
@@ -114,7 +116,8 @@ function getQueryVariable(variable) {
   return false;
 }
 
-var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+// var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+var hourColor = ['#B9FB69', '#CEFB6A', '#E6FC6C', '#FEFD6D', '#F9E067', '#F5C361', '#F1A85C', '#EE8C58', '#EC7255', '#EB5953'];
 var dayId = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
 function renderElements(data) {
