@@ -143,7 +143,7 @@ function renderElements(data, GMT_time_zone) {
   for (var day = 0; day < maxDay; day++) {
     var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
     e.innerHTML = dayId[day];
-    e.setAttribute('x', startX - 28);
+    e.setAttribute('x', startX - 30);
     e.setAttribute('y', startY + day * radius + radius / 2);
     e.setAttribute('class', 'hour_day_text');
     e.setAttribute('id', dayId[day] + '_text');
