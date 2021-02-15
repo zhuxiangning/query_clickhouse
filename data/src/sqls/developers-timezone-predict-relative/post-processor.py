@@ -48,7 +48,7 @@ def show_data_in_browser():
         df.to_csv(rel_res_csv_save_path)
 
     example_idx = 2
-    max_each_hour = max(np.array(actor_24hours_list[1]))
+    max_each_hour = max(np.array(actor_24hours_list[2]))
     d = np.array(actor_24hours_list[example_idx])
     d = d * 10 / max_each_hour
     GMT_time_zone = GMT_time_zones[example_idx]
