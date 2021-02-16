@@ -157,6 +157,8 @@ git remote add upstream https://github.com/birdflyi/test.git
 
 *仅有**工作区wk-dir**的状态可以在本地直接查看和修改。
 
+注意：git pull 有额外的将remote copy:upstream同步到remote copy:origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
+
 
 
 ## 4.2 常用命令解释
@@ -316,8 +318,11 @@ feature <--> feature
 
    ```bash
    git fetch upstream
+   git pull
    git rebase upstream/develop
    ```
+
+   注意：git pull 有额外的将remote copy:upstream同步到remote copy:origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
 
 5. 在本地提交变更（**commit log要能体现主要做了什么**）
 
@@ -326,7 +331,7 @@ feature <--> feature
    git commit -m "your commit message."
    ```
 
-   注：如果4.中rebase发生冲突，请忽略上面的命令，而需要手动修改冲突文件，然后输入`git fetch upstream`, `git add .`和`git rebase --continue`完成此阶段。
+   注：如果4.中rebase发生冲突，请忽略上面的命令，而需要手动修改冲突文件，然后输入`git fetch upstream`, `git pull`, `git add .`和`git rebase --continue`完成此阶段。
 
 6. 将提交 push 到 fork 的仓库下
 
@@ -348,6 +353,7 @@ feature <--> feature
 
    ```bash
    git fetch upstream
+   git pull
    git rebase upstream/develop
    git push -f origin develop
    ```
