@@ -267,7 +267,7 @@ feature <--> feature
 
 保护自己的隐私，保护他人的隐私
 
-或者：[行为准则](https://github.com/birdflyi/query_clickhouse/community/code-of-conduct/new?template=contributor-covenant)
+或者：[行为准则](https://github.com/birdflyi/query_clickhouse/blob/main/CODE_OF_CONDUCT.md)
 
 
 
