@@ -267,7 +267,7 @@ feature <--> feature
 
 保护自己的隐私，保护他人的隐私
 
-或者：[行为准则]()
+或者：[行为准则](https://github.com/birdflyi/query_clickhouse/community/code-of-conduct/new?template=contributor-covenant)
 
 
 
@@ -340,7 +340,7 @@ feature <--> feature
 
    在您的远程仓库网页中提PR。当push完成后，您的项目主页会自动显示出一个 Pull Request 的按钮。若有延迟，可点击分支旁的`New pull request`按钮。
 
-   提交 PR 的时候请参考 [PR 模板](https://github.com/birdflyi/query_clickhouse/blob/main/.github/PULL_REQUEST_TEMPLATE.md)。在进行较大的变更的时候请确保 PR 有一个对应的 Issue。
+   提交 PR 的时候请参考 [PR 模板](https://github.com/birdflyi/query_clickhouse/blob/main/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md)。在进行较大的变更的时候请确保 PR 有一个对应的 Issue。
 
    等待reviewer的响应结果。
 
