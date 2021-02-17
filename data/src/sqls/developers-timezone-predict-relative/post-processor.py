@@ -58,6 +58,9 @@ def show_data_in_browser():
     d = np.array(actor_rel_24hours_list[example_idx])
     d = d * 10 / max_each_hour
     # d = np.ceil(d)
+    import matplotlib.pyplot as plt
+    plt.plot(d)
+    plt.show()
     GMT_time_zone = GMT_time_zones[example_idx]
     max_conti_k_hours = max_conti_k_hours_list[example_idx]
     iframe = """<iframe id="svg" src="{0}?data={1}&GMT_time_zone={2}&max_conti_k_hours={3}"  width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(list(d)), GMT_time_zone, max_conti_k_hours)
@@ -73,8 +76,8 @@ def show_data_in_browser():
 def analysis(data):
     data = pd.DataFrame(data)
     data.columns = ["actor_id", "hour", "count"]
-    min_count = min(data["count"])
-    max_count = max(data["count"])
+    # min_count = min(data["count"])
+    # max_count = max(data["count"])
     actor_ids = []
     actor_max_conti_index = []
     max_conti_k_hours_list = []
@@ -85,8 +88,8 @@ def analysis(data):
         for i in range(0, 24):
             rows = single_actor_data[single_actor_data.hour == i]
             if len(rows):
-                # normalize and prevent zero for min
-                c = max(1, rows["count"].iloc[0]) / max_count
+                # prevent zero for min
+                c = max(1, rows["count"].iloc[0])
                 d.append(c)
             else:
                 d.append(0)
