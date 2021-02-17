@@ -120,7 +120,7 @@ function getQueryVariable(variable) {
 var hourColor = ['#B9FB69', '#CEFB6A', '#E6FC6C', '#FEFD6D', '#F9E067', '#F5C361', '#F1A85C', '#EE8C58', '#EC7255', '#EB5953'];
 var dayId = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-function renderElements(data) {
+function renderElements(data, disp_TZs) {
   var width = 24;
   var hight = 24;
   var startX = 62;
@@ -184,6 +184,39 @@ function renderElements(data) {
       svg.appendChild(e);
     }
   }
+
+  // render TZs
+  if(disp_TZs != undefined) {
+	    for (var i = 0; i < disp_TZs.length; i++) {
+		  var disp_TZ = disp_TZs[i];
+		  var disp_TZ_str = ("+" + disp_TZ.toString()).replace("+-", "-");
+		  var disp_TZ_head = 'UTC' + disp_TZ_str;
+		  var x = startX - 32;
+		  var y = startY + (maxDay+i) * radius + radius / 2;
+		  var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		  e.innerHTML = disp_TZ_head;
+		  e.setAttribute('x', x);
+		  e.setAttribute('y', y);
+		  e.setAttribute('class', 'hour_day_text');
+		  e.setAttribute('id', disp_TZ_head + '_text');
+		  svg.appendChild(e);
+		  for (var hour = 0; hour < maxHour; hour++) {
+			var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+			var hour_TZ = hour - disp_TZ;
+			if (hour_TZ >= 12){
+			  hour_TZ -= 24;
+			}
+			else if (hour_TZ < -12) {
+				hour_TZ += 24;
+			}
+			e.innerHTML = hour_TZ.toString();
+			e.setAttribute('x', startX + hour * radius + radius / 2);
+			e.setAttribute('y', y);
+			e.setAttribute('class', 'hour_day_text');
+			svg.appendChild(e);
+		  }
+		}
+  }
 }
 
 function onSvgLoad() {
@@ -202,13 +235,40 @@ function onSvgLoad() {
   } else {
     data = undefined;
   }
-  renderElements(data);
+  var disp_TZs = getQueryVariable("disp_TZs");
+  if (disp_TZs != false) {
+    try {
+      disp_TZs = JSON.parse(disp_TZs);
+    } catch {
+      try {
+        disp_TZs = decodeURI(disp_TZs);
+        disp_TZs = JSON.parse(disp_TZs);
+      } catch {
+        disp_TZs = undefined;
+      }
+    }
+  } else {
+    disp_TZs = undefined;
+  }
+  renderElements(data, disp_TZs);
   var lang = getQueryVariable("lang");
+  var hide_title = getQueryVariable("hide_title");
+  var hide_lang_btn = getQueryVariable("hide_lang_btn");
   var langBtn = document.getElementById("en_btn_text");
   if (lang && (lang == "zh" || lang == "zh-cn")) {
     langBtn = document.getElementById("zh_btn_text");
   }
   changeLang(langBtn);
+  if (hide_title == "true") {
+	  var e_title_text = document.getElementById("title_text");
+	  e_title_text.parentNode.removeChild(e_title_text);
+  }
+  if (hide_lang_btn == "true") {
+	  var langBtns = document.getElementsByName("lang_btn");
+	  for (var i = langBtns.length - 1; i >= 0; i--) {
+		langBtns[i].parentNode.removeChild(langBtns[i]);
+	  }
+  }
   var color = getQueryVariable("bg_color");
   if (color) {
     document.getElementById("bg").style.fill = color;
