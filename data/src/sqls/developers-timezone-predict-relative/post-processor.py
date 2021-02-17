@@ -1,5 +1,4 @@
 import copy
-import math
 import os
 import sys
 
@@ -11,8 +10,8 @@ import webbrowser
 from etc import profile
 
 CONTI_K_HOURS = 12
+# GMT = [i if i < 12 else (i - 24) for i in range(24)]
 GMT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
-KEEP_ORIGIN = False
 UPDATE_REL_RESULT_CSV = False
 
 
@@ -22,35 +21,43 @@ def show_data_in_browser():
     if os.path.isfile(rel_res_csv_save_path) and not UPDATE_REL_RESULT_CSV:
         df = pd.read_csv(rel_res_csv_save_path, index_col=0)
         actor_ids, GMT_time_zones, actor_24hours_list = df['actor_id'].values, df['time_zone'].values, df[list(map(str, list(range(24))))].values
+        actor_rel_24hours_list = actor_24hours_list
         max_conti_k_hours_list = np.zeros(len(actor_ids))
     else:
         data = pd.read_csv(res_csv_save_path, index_col=0)
         actor_ids, actor_max_conti_indexes, max_conti_k_hours_list, actor_24hours_list = analysis(data)
         GMT_time_zones = []
-        actor_rel_24hours_list = copy.deepcopy(actor_24hours_list) if KEEP_ORIGIN else actor_24hours_list
-        for i in range(len(actor_max_conti_indexes)):
-            time_diff = actor_max_conti_indexes[i] - 8
-            if time_diff != 0:
-                actor_rel_24hours_list[i] = actor_rel_24hours_list[i][time_diff:] + actor_rel_24hours_list[i][:time_diff]
+        actor_rel_24hours_list = copy.deepcopy(actor_24hours_list)
+        for i in range(len(actor_ids)):
+            delta_time = actor_max_conti_indexes[i] - 8
+
+            # 1. calculate time zone
+            GMT_time_zone = GMT[delta_time]
+            GMT_time_zones.append(GMT_time_zone)
+
+            # 2. shift actor_24hours_list to actor_rel_24hours_list
+            if delta_time != 0:
+                actor_rel_24hours_list[i] = actor_rel_24hours_list[i][delta_time:] + actor_rel_24hours_list[i][:delta_time]
         df_actor_rel_24hours_lists = pd.DataFrame(np.array(actor_rel_24hours_list))
 
-        for i in range(len(actor_ids)):
-            GMT_time_zone = actor_max_conti_indexes[i] if actor_max_conti_indexes[i] < 12 else (actor_max_conti_indexes[i] - 24)
-            GMT_time_zone = GMT[GMT_time_zone - 8]
-            GMT_time_zones.append(GMT_time_zone)
-        df = pd.DataFrame({"actor_id": actor_ids, "time_zone": GMT_time_zones})
-        df = pd.concat([df, df_actor_rel_24hours_lists], axis=1)
+        # 3. aggregate by hours for each actor_id
         df_stat = pd.DataFrame({"actor_id": [-1, -2, -3, -4], "time_zone": [0, 0, 0, 0]})
         df_stat_actor_rel_24hours_lists = pd.DataFrame([df_actor_rel_24hours_lists.sum(axis=0), df_actor_rel_24hours_lists.max(axis=0), df_actor_rel_24hours_lists.mean(axis=0), df_actor_rel_24hours_lists.min(axis=0)])
         df_stat = pd.concat([df_stat, df_stat_actor_rel_24hours_lists], axis=1)
         df_stat.index = ['sum', 'max', 'mean', 'min']
+
+        df = pd.DataFrame({"actor_id": actor_ids, "time_zone": GMT_time_zones})
+        df = pd.concat([df, df_actor_rel_24hours_lists], axis=1)
         df = df_stat.append(df)
+        actor_rel_24hours_list = df[list(range(24))].values
         df.to_csv(rel_res_csv_save_path)
 
-    example_idx = 2
-    max_each_hour = max(np.array(actor_24hours_list[2]))
-    d = np.array(actor_24hours_list[example_idx])
+    # mapping to 1-10 levels
+    example_idx = 2  # row: mean
+    max_each_hour = max(np.array(actor_rel_24hours_list[example_idx]))
+    d = np.array(actor_rel_24hours_list[example_idx])
     d = d * 10 / max_each_hour
+    # d = np.ceil(d)
     GMT_time_zone = GMT_time_zones[example_idx]
     max_conti_k_hours = max_conti_k_hours_list[example_idx]
     iframe = """<iframe id="svg" src="{0}?data={1}&GMT_time_zone={2}&max_conti_k_hours={3}"  width="600" height="260"></iframe>""".format('./' + profile.image_svg, json.dumps(list(d)), GMT_time_zone, max_conti_k_hours)
@@ -78,9 +85,9 @@ def analysis(data):
         for i in range(0, 24):
             rows = single_actor_data[single_actor_data.hour == i]
             if len(rows):
-                # prevent zero for min
-                c = math.ceil((sum(rows["count"]) - min_count*7) * 10 / ((max_count - min_count)*7))
-                d.append(max(1, c))
+                # normalize and prevent zero for min
+                c = max(1, rows["count"].iloc[0]) / max_count
+                d.append(c)
             else:
                 d.append(0)
         k = CONTI_K_HOURS
