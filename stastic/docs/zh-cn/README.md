@@ -32,3 +32,16 @@
    2.2 必要时修改 pre-process 和 post-processor。 ![script-query_sql-content](../../../stastic/images/script-query_sql-content.png)
 
 3. 运行 'script/service/query_sql.py'。 在 'data/result' 查看运行结果。
+
+## 相关链接
+
+1. 相关项目：[X-lab2017/github-analysis-report](https://github.com/X-lab2017/github-analysis-report)
+
+2. 相关公众号及推送文章：[重磅 |《GitHub 2020 数字洞察报告》正式发布](https://mp.weixin.qq.com/s/DYySsVe5Z2NH0hvGi4xlKg)
+
+3. 相关资源：[《GitHub 2020 数字洞察报告》](http://oss.x-lab.info/github-insight-report-2020.pdf)
+
+4. 实验室简介：[X-Lab](http://www.x-lab.info/)
+
+说明：本项目[birdflyi/query_clickhouse](https://github.com/birdflyi/query_clickhouse)是项目[X-lab2017/github-analysis-report](https://github.com/X-lab2017/github-analysis-report)的关联项目。部分功能与[《GitHub 2020 数字洞察报告》](http://oss.x-lab.info/github-insight-report-2020.pdf)保持一致，简介见公众号相关推文：[重磅 |《GitHub 2020 数字洞察报告》正式发布](https://mp.weixin.qq.com/s/DYySsVe5Z2NH0hvGi4xlKg)。
+
