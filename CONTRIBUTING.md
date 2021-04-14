@@ -301,39 +301,59 @@ feature <--> feature
    git remote add upstream https://github.com/birdflyi/query_clickhouse.git
    ```
 
-3. 在develop分支上再创建新的分支，在新的分支上进行开发操作（**请确保对应的变更都有测试用例或 demo 进行验证**）
+   可以通过`git remote -v`查看设置，应显示`origin`和`upstream`的fetch和push设置。
+
+3. 保持origin及本地分支与upstream远程相应分支一致（通过 `fetch upstream` 和 `rebase` 操作）
+
+   切换到develop分支
+
+   ```bash
+   git checkout develop
+   ```
+
+   保持origin及本地分支与upstream远程相应分支一致：
+
+   ```bash
+   git fetch upstream develop
+   git pull
+   git rebase upstream/develop
+   ```
+
+   注意：git pull 有额外的将upstream同步到origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
+
+   如果rebase发生冲突，需要解决冲突：即输入`git fetch upstream`, `git pull`, `git rebase upstream/develop`之后，手动修改冲突文件，再用`git add .`和`git rebase --continue`完成此阶段。
+
+   1.-3.已完成准备工作，当一个PR完成后，可以跳过1.-2.的步骤，从3.开始准备。
+
+   4.-7.将完成提交和推送工作。
+
+4. 在develop分支上再创建新的分支，在新的分支上进行开发操作（**请确保对应的变更都有测试用例或 demo 进行验证**）
 
    ```bash
    git checkout develop
    git checkout -b YOUR-NEW-BRANCH
    ```
 
-   1.-3.已完成准备工作
-
-   开始工作了，修改完成后注意备份工作。
-
-   4.-6.将完成提交和推送工作。
-
-4. 保持分支与远程相应分支一致（通过 `fetch upstream` 和 `rebase` 操作）
-
-   ```bash
-   git fetch upstream
-   git pull
-   git rebase upstream/develop
-   ```
-
-   注意：git pull 有额外的将remote copy:upstream同步到remote copy:origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
-
-5. 在本地提交变更（**commit log要能体现主要做了什么**）
+5. 在本地修改代码或文件后，提交变更（**commit log要能体现主要做了什么**）
 
    ```bash
    git add .
    git commit -m "your commit message."
    ```
 
-   注：如果4.中rebase发生冲突，请忽略上面的命令，而需要手动修改冲突文件，然后输入`git fetch upstream`, `git pull`, `git add .`和`git rebase --continue`完成此阶段。
+6. 保持origin及本地分支与upstream远程相应分支一致（通过 `fetch upstream` 和 `rebase` 操作）[与3.相同]
 
-6. 将提交 push 到 fork 的仓库下
+   ```bash
+   git fetch upstream develop
+   git pull
+   git rebase upstream/develop
+   ```
+
+   注意：git pull 有额外的将upstream同步到origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
+
+   如果rebase发生冲突，需要解决冲突：即输入`git fetch upstream`, `git pull`, `git rebase upstream/develop`之后，手动修改冲突文件，再用`git add .`和`git rebase --continue`完成此阶段。
+
+7. 将提交 push 到 fork 的仓库下
 
    ```bash
    git push -f origin YOUR-NEW-BRANCH
@@ -341,24 +361,45 @@ feature <--> feature
 
    注：完整命令为：`git push -f origin YOUR-NEW-BRANCH:YOUR-NEW-BRANCH`
 
-7. 创建一个 pull request (PR)
+8. 创建一个 pull request (PR)
 
    在您的远程仓库网页中提PR。当push完成后，您的项目主页会自动显示出一个 Pull Request 的按钮。若有延迟，可点击分支旁的`New pull request`按钮。
+
+   如图所示：(这里：YOUR-NEW-BRANCH指origin的develop-lzh分支，提交PR到upstream的develop分支)
+
+   ![image-20210414135724212](stastic/images/newPR.png)
 
    提交 PR 的时候请参考 [PR 模板](https://github.com/birdflyi/query_clickhouse/blob/main/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md)。在进行较大的变更的时候请确保 PR 有一个对应的 Issue。
 
    等待reviewer的响应结果。
 
-8. 维护origin
+   若PR未被合入，则继续循环4.-7.即可，此步骤中的PR追踪的是upstream和origin的动态差异信息，只需要提交到origin新的修改即可，而不需要关闭未被合入状态的PR再重新开启新的PR。
 
+9. PR被upstream合并后，维护origin
+
+   删除开发分支YOUR-NEW-BRANCH，保持origin及本地分支与upstream远程相应分支一致（通过 `fetch upstream` 和 `rebase` 操作）[与3.相同]
+   a.删除origin开发分支YOUR-NEW-BRANCH
+   
    ```bash
-   git fetch upstream
-   git pull
-   git rebase upstream/develop
-   git push -f origin develop
+   git push origin --delete YOUR-NEW-BRANCH
    ```
-
-
+   b.删除本地开发分支YOUR-NEW-BRANCH
+   ```bash
+   git checkout develop -f
+   git branch -D YOUR-NEW-BRANCH
+   ```
+   c.保持origin及本地分支与upstream远程相应分支一致（通过 `fetch upstream` 和 `rebase` 操作）[与3.相同]
+   ```bash
+   git fetch upstream develop
+   git pull --ff upstream develop
+   git rebase upstream/develop
+   ```
+   
+   注意：git pull 有额外的将upstream同步到origin的作用，从而实现origin副本通过fast-forward与upstream保持同步。推荐养成在git fetch upstream后即git pull的好习惯。
+   
+   如果rebase发生冲突，需要解决冲突：即输入`git fetch upstream`, `git pull`, `git rebase upstream/develop`之后，手动修改冲突文件，再用`git add .`和`git rebase --continue`完成此阶段。
+   
+   下一次PR可以从3.开始准备。
 
 ## 5.5 报告安全问题
 
