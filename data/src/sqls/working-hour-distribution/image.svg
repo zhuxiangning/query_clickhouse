@@ -1,18 +1,20 @@
 <svg
-    xmlns="http://www.w3.org/2000/svg" width="600" height="250" preserveAspectRatio="xMinYMin meet" viewBox="0 0 600 250" onload="onSvgLoad()">
+    xmlns="http://www.w3.org/2000/svg" width="650" height="250" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 250" onload="onSvgLoad()">
     <style type="text/css">
 <![CDATA[
 .bg {
-  fill: white;
+  fill: black;
 }
 text {
   text-anchor: middle;
   dominant-baseline: middle;
 }
 .hour_day_text {
-  font-size: 14px;
+  fill: white;
+  font-size: 13px;
 }
 .title_text {
+  fill: white;
   font-size: 20px;
 }
 ]]>
@@ -62,6 +64,21 @@ var textMap = new Map([
       "中文": "工作时间分布图",
       "EN": "Working Hour Distribution"
     }
+  ], [
+    "UTC+0_text", {
+      "中文": "协调世界时 UTC",
+      "EN": "UTC"
+    }
+  ], [
+    "UTC+8_text", {
+      "中文": "北京时间 UTC+8",
+      "EN": "UTC+8"
+    }
+  ], [
+    "UTC-5_text", {
+      "中文": "美东时间 UTC-5",
+      "EN": "UTC-5"
+    }
   ]
 ]);
 
@@ -90,9 +107,9 @@ function changeLang(btn) {
 
   var btns = document.getElementsByName("lang_btn");
   for (var b of btns) {
-    b.style.fill = "lightgrey";
+    b.style.fill = "darkgrey";
   }
-  btn.style.fill = "black";
+  btn.style.fill = "white";
 }
 
 function onLangBtnClick(evt) {
@@ -114,19 +131,21 @@ function getQueryVariable(variable) {
   return false;
 }
 
-var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+// var hourColor = ['#bccc92', '#8ab04c', '#8ab04c', '#b5aa4e', '#a68341', '#9f6237', '#9e427e', '#9a462a', '#9f402b', '#983427'];
+var hourColor = ['#B9FB69', '#CEFB6A', '#E6FC6C', '#FEFD6D', '#F9E067', '#F5C361', '#F1A85C', '#EE8C58', '#EC7255', '#EB5953'];
 var dayId = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-function renderElements(data) {
+function renderElements(data, disp_TZs) {
   var width = 24;
   var hight = 24;
-  var startX = 62;
-  var startY = 52;
+  var startX = 122;
+  var startY = 0;
   var svg = document.getElementsByTagName("svg")[0];
   var maxHour = 24;
   var maxDay = 7;
   var radius = 22;
   var length = maxHour * maxDay;
+  startY += disp_TZs.length * radius;
   if (!data) {
     data = [];
     for (var i = 0; i < length; i++) {
@@ -154,14 +173,14 @@ function renderElements(data) {
     e.setAttribute('x', startX + hour * radius + radius / 2);
     e.setAttribute('y', startY - 10);
     e.setAttribute('class', 'hour_day_text');
-    svg.appendChild(e);
+    // svg.appendChild(e);
   }
 
   // render day
   for (var day = 0; day < maxDay; day++) {
     var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
     e.innerHTML = dayId[day];
-    e.setAttribute('x', startX - 41);
+    e.setAttribute('x', startX - 56);
     e.setAttribute('y', startY + day * radius + radius / 2);
     e.setAttribute('class', 'hour_day_text');
     e.setAttribute('id', dayId[day] + '_text');
@@ -181,6 +200,43 @@ function renderElements(data) {
       svg.appendChild(e);
     }
   }
+
+  // render TZs
+  if(disp_TZs != undefined) {
+	    for (var i = 0; i < disp_TZs.length; i++) {
+		  var disp_TZ = disp_TZs[i];
+		  var disp_TZ_str = ("+" + disp_TZ.toString()).replace("+-", "-");
+		  var disp_TZ_head = 'UTC' + disp_TZ_str;
+		  disp_TZ_str = disp_TZ_head;
+		  var x = startX - 56;
+		  // var y = startY + (maxDay+i) * radius + radius / 2;
+		  var y = startY + (-disp_TZs.length+i) * radius + radius / 2;
+		  var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		  e.innerHTML = disp_TZ_str;
+		  e.setAttribute('x', x);
+		  e.setAttribute('y', y);
+		  e.setAttribute('class', 'hour_day_text');
+		  e.setAttribute('id', disp_TZ_head + '_text');
+		  svg.appendChild(e);
+		  for (var hour = 0; hour < maxHour; hour++) {
+			var e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+			var hour_TZ = hour + disp_TZ;
+			if (hour_TZ >= 24){
+			  hour_TZ %= 24;
+			}
+			else if (hour_TZ < 0) {
+			  hour_TZ %= 24;
+			  hour_TZ += 24;
+			  hour_TZ %= 24;
+			}
+			e.innerHTML = hour_TZ.toString();
+			e.setAttribute('x', startX + hour * radius + radius / 2);
+			e.setAttribute('y', y);
+			e.setAttribute('class', 'hour_day_text');
+			svg.appendChild(e);
+		  }
+		}
+  }
 }
 
 function onSvgLoad() {
@@ -199,13 +255,40 @@ function onSvgLoad() {
   } else {
     data = undefined;
   }
-  renderElements(data);
+  var disp_TZs = getQueryVariable("disp_TZs");
+  if (disp_TZs != false) {
+    try {
+      disp_TZs = JSON.parse(disp_TZs);
+    } catch {
+      try {
+        disp_TZs = decodeURI(disp_TZs);
+        disp_TZs = JSON.parse(disp_TZs);
+      } catch {
+        disp_TZs = undefined;
+      }
+    }
+  } else {
+    disp_TZs = undefined;
+  }
+  renderElements(data, disp_TZs);
   var lang = getQueryVariable("lang");
+  var hide_title = getQueryVariable("hide_title");
+  var hide_lang_btn = getQueryVariable("hide_lang_btn");
   var langBtn = document.getElementById("en_btn_text");
   if (lang && (lang == "zh" || lang == "zh-cn")) {
     langBtn = document.getElementById("zh_btn_text");
   }
   changeLang(langBtn);
+  if (hide_title == "true") {
+	  var e_title_text = document.getElementById("title_text");
+	  e_title_text.parentNode.removeChild(e_title_text);
+  }
+  if (hide_lang_btn == "true") {
+	  var langBtns = document.getElementsByName("lang_btn");
+	  for (var i = langBtns.length - 1; i >= 0; i--) {
+		langBtns[i].parentNode.removeChild(langBtns[i]);
+	  }
+  }
   var color = getQueryVariable("bg_color");
   if (color) {
     document.getElementById("bg").style.fill = color;
@@ -227,7 +310,7 @@ function hide(evt, id) {
 ]]>
     </script>
     
-    <rect id="bg" class="bg" x="0" y ="0" width="600" height="250"/>
+    <rect id="bg" class="bg" x="0" y ="0" width="650" height="250"/>
 
     <text name="lang_btn" id="en_btn_text" x="280" y="240" onclick="onLangBtnClick(evt)">EN</text>
     <text name="lang_btn" id="zh_btn_text" x="320" y="240" onclick="onLangBtnClick(evt)">中文</text>

@@ -1,24 +1,4 @@
-[2021-02-08 01:30:56 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:30:56 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:30:56 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:30:56 - INFO - transport.py:line 1819]: Authentication (password) successful!
-[2021-02-08 01:31:08 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:31:08 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:31:08 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:31:08 - INFO - transport.py:line 1819]: Authentication (password) successful!
-[2021-02-08 01:34:51 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:34:51 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:34:51 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:34:51 - INFO - transport.py:line 1819]: Authentication (password) successful!
-[2021-02-08 01:36:25 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:36:25 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:36:25 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:36:25 - INFO - transport.py:line 1819]: Authentication (password) successful!
-[2021-02-08 01:36:45 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:36:45 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:36:45 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:36:45 - INFO - transport.py:line 1819]: Authentication (password) successful!
-[2021-02-08 01:37:07 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:37:07 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
-[2021-02-08 01:37:07 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
-[2021-02-08 01:37:07 - INFO - transport.py:line 1819]: Authentication (password) successful!
+[2021-02-08 15:47:13 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
+[2021-02-08 15:47:14 - INFO - transport.py:line 1819]: Authentication (publickey) failed.
+[2021-02-08 15:47:14 - INFO - transport.py:line 1819]: Connected (version 2.0, client OpenSSH_7.4)
+[2021-02-08 15:47:14 - INFO - transport.py:line 1819]: Authentication (password) successful!

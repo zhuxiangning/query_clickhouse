@@ -39,6 +39,18 @@
           "post_process_display_mode": 1
         },
         {
+          "unit_name": "developers-timezone-predict-relative",
+          "pre_processor": false,
+          "post_processor": true,
+          "post_process_display_mode": 1
+        },
+        {
+          "unit_name": "developers-timezone-predict-single",
+          "pre_processor": false,
+          "post_processor": true,
+          "post_process_display_mode": 1
+        },
+        {
           "unit_name": "developers-top",
           "pre_processor": false,
           "post_processor": true,
@@ -46,6 +58,12 @@
         },
         {
           "unit_name": "language-distribution",
+          "pre_processor": false,
+          "post_processor": true,
+          "post_process_display_mode": 0
+        },
+        {
+          "unit_name": "language-distribution-actor",
           "pre_processor": false,
           "post_processor": true,
           "post_process_display_mode": 0

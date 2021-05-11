@@ -99,9 +99,12 @@ def post_process(s, post_process_display_mode):
     return ret_heads
 
 
-def post_process_display_svg(py_post_processor_path, res_csv_save_path, svg_html_path, prepared=False):
+def post_process_display_svg(py_show_svg_path, res_csv_save_path, svg_html_path, prepared=False, use_flask=False):
     if prepared:
-        os.system('python {0} {1} {2}'.format(py_post_processor_path, res_csv_save_path, svg_html_path))  # Run the new python script 'post-processor.py' when prepared
+        if use_flask:
+            os.system('python {0} {1} {2}'.format(py_show_svg_path, res_csv_save_path, svg_html_path))  # Run the python script 'routes.py' when prepared
+        else:
+            os.system('python {0} {1} {2}'.format(py_show_svg_path, res_csv_save_path, svg_html_path))  # Run the new python script 'post-processor.py' when prepared
     return
 
 
@@ -154,7 +157,7 @@ if __name__ == '__main__':
     UPDATE_SQLS_BRIEF = True
     WHICH_TABLE_NAME = profile.tables[profile.WHICH_TABLE + 1]
     WHICH_SQLS_GROUP = 1  # index start from 0
-    WHICH_FUNC_UNITS = 2  # index start from 0
+    WHICH_FUNC_UNITS = -1  # index start from 0
 
     json_path = filePathConf.absPathDict[filePathConf.BRIEF_SQLS_PATH]
     auto_update_sqls_brief(json_path, UPDATE_SQLS_BRIEF)
@@ -214,8 +217,11 @@ if __name__ == '__main__':
         # Change the python file 'post-processor.py' created by jiphy: function analysis() must be overwrote.
         # post_processor_prepared = False  # Default: False.
         post_processor_prepared = True  # Change it to True after the function analysis() overwritten.
+        USE_FLASK = False  # Use flash to render svg if True(you shuould shut down your server manually), else use the browser to render.
+        flask_app_routes_path = os.path.join(filePathConf.BASE_DIR, 'app/routes.py')
         js_post_processor_path = os.path.join(units_src_dir, profile.post_processor)
         py_post_processor_path = js_post_processor_path.replace('.js', '.py')
+        py_show_svg_path = flask_app_routes_path if USE_FLASK else py_post_processor_path
         svg_path = os.path.join(units_src_dir, profile.image_svg)
         svg_html_path = svg_path + '-' + param_dict["config"]["table"] + '.html'
-        post_process_display_svg(py_post_processor_path, res_csv_save_path, svg_html_path, prepared=post_processor_prepared)
+        post_process_display_svg(py_show_svg_path, res_csv_save_path, svg_html_path, prepared=post_processor_prepared, use_flask=USE_FLASK)
